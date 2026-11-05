@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Registered students</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<main class="card card-wide">
+    <header>
+        <h1>REGISTERED STUDENTS</h1>
+        <p class="lead">Search by matriculation number (full or beginning of it).</p>
+    </header>
+
+    <form id="search-form" class="search">
+        <label for="q" class="sr-only">Matriculation number</label>
+        <input type="search" id="q" name="q" placeholder="e.g. SE2026001" maxlength="15">
+        <button type="submit" class="btn btn-inline">Search</button>
+    </form>
+
+    <div id="message" class="empty" role="status"></div>
+    <div class="table-wrap" id="table-wrap" hidden>
+        <table>
+            <thead><tr><th>Name</th><th>Matric no.</th><th>Department</th><th>Level</th><th>Registered</th></tr></thead>
+            <tbody id="rows"></tbody>
+        </table>
+    </div>
+
+    <p class="footer-link"><a href="index.html">Back to registration</a></p>
+</main>
+<script>
+(() => {
+    'use strict';
+    const form = document.getElementById('search-form');
+    const msg = document.getElementById('message');
+    const wrap = document.getElementById('table-wrap');
+    const body = document.getElementById('rows');
+
+    async function load(q) {
+        msg.textContent = 'Loading...';
+        wrap.hidden = true;
+        body.textContent = '';
+        try {
+            const res = await fetch('summary.php?q=' + encodeURIComponent(q), { credentials: 'same-origin' });
+            const data = await res.json();
+            if (!data.success) { msg.textContent = data.message; return; }
+            if (!data.rows.length) { msg.textContent = 'No students found.'; return; }
+            data.rows.forEach((r) => {
+                const tr = document.createElement('tr');
+                [r.full_name, r.matric_number, r.department, r.level, r.registered].forEach((v) => {
+                    const td = document.createElement('td');
+                    td.textContent = v;          // textContent = safe against XSS
+                    tr.appendChild(td);
+                });
+                body.appendChild(tr);
+            });
+            msg.textContent = '';
+            wrap.hidden = false;
+        } catch (err) {
+            msg.textContent = 'The student list is unavailable right now.';
+        }
+    }
+
+    form.addEventListener('submit', (e) => { e.preventDefault(); load(document.getElementById('q').value.trim()); });
+    load('');
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Student Registration</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<main class="card">
+    <header>
+        <h1>STUDENT REGISTRATION</h1>
+        <p class="lead">Complete all required fields marked <span class="req">*</span></p>
+    </header>
+
+    <div id="form-alert" class="alert" role="alert" hidden></div>
+
+    <!-- novalidate: the browser's own bubbles are replaced by script.js messages;
+         the PHP server is always the final authority -->
+    <form id="registration-form" method="post" action="register.php" novalidate>
+        <input type="hidden" name="csrf_token" id="csrf_token" value="">
+
+        <div class="field">
+            <label for="full_name">Full name <span class="req">*</span></label>
+            <input type="text" id="full_name" name="full_name" placeholder="e.g. Ada Nfor"
+                   maxlength="100" autocomplete="name" required aria-describedby="err-full_name">
+            <p class="error" id="err-full_name" data-error-for="full_name" hidden></p>
+        </div>
+
+        <div class="field">
+            <label for="email">Email address <span class="req">*</span></label>
+            <input type="email" id="email" name="email" placeholder="student@example.com"
+                   maxlength="150" autocomplete="email" required aria-describedby="err-email">
+            <p class="error" id="err-email" data-error-for="email" hidden></p>
+        </div>
+
+        <div class="field">
+            <label for="phone">Phone number <span class="req">*</span></label>
+            <input type="tel" id="phone" name="phone" placeholder="e.g. 6XXXXXXXX"
+                   maxlength="20" inputmode="tel" autocomplete="tel" required aria-describedby="err-phone">
+            <p class="error" id="err-phone" data-error-for="phone" hidden></p>
+        </div>
+
+        <div class="field">
+            <label for="matric_number">Matriculation number <span class="req">*</span></label>
+            <input type="text" id="matric_number" name="matric_number" placeholder="e.g. SE2026001"
+                   maxlength="15" autocapitalize="characters" required aria-describedby="err-matric_number">
+            <p class="error" id="err-matric_number" data-error-for="matric_number" hidden></p>
+        </div>
+
+        <div class="field">
+            <label for="date_of_birth">Date of birth <span class="req">*</span></label>
+            <input type="date" id="date_of_birth" name="date_of_birth"
+                   autocomplete="bday" required aria-describedby="err-date_of_birth">
+            <p class="error" id="err-date_of_birth" data-error-for="date_of_birth" hidden></p>
+        </div>
+
+        <div class="field">
+            <label for="department">Department <span class="req">*</span></label>
+            <select id="department" name="department" required aria-describedby="err-department">
+                <option value="">Select department</option>
+                <option>Software Engineering</option>
+                <option>Computer Science</option>
+                <option>Information Systems</option>
+                <option>Networks and Telecommunications</option>
+                <option>Electrical Engineering</option>
+                <option>Civil Engineering</option>
+            </select>
+            <p class="error" id="err-department" data-error-for="department" hidden></p>
+        </div>
+
+        <div class="field">
+            <label for="level">Level <span class="req">*</span></label>
+            <select id="level" name="level" required aria-describedby="err-level">
+                <option value="">Select level</option>
+                <option value="100">Level 100</option>
+                <option value="200">Level 200</option>
+                <option value="300">Level 300</option>
+                <option value="400">Level 400</option>
+                <option value="500">Level 500</option>
+            </select>
+            <p class="error" id="err-level" data-error-for="level" hidden></p>
+        </div>
+
+        <fieldset class="field">
+            <legend>Gender <span class="req">*</span></legend>
+            <div class="radios">
+                <label class="radio"><input type="radio" name="gender" value="female"><span>Female</span></label>
+                <label class="radio"><input type="radio" name="gender" value="male"><span>Male</span></label>
+                <label class="radio"><input type="radio" name="gender" value="prefer_not_to_say"><span>Prefer not to say</span></label>
+            </div>
+            <p class="error" id="err-gender" data-error-for="gender" hidden></p>
+        </fieldset>
+
+        <div class="field">
+            <label for="password">Password <span class="req">*</span></label>
+            <input type="password" id="password" name="password" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;"
+                   minlength="8" autocomplete="new-password" required aria-describedby="err-password">
+            <p class="hint">At least 8 characters, with a letter and a number.</p>
+            <p class="error" id="err-password" data-error-for="password" hidden></p>
+        </div>
+
+        <div class="field">
+            <label for="confirm_password">Confirm password <span class="req">*</span></label>
+            <input type="password" id="confirm_password" name="confirm_password" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;"
+                   autocomplete="new-password" required aria-describedby="err-confirm_password">
+            <p class="error" id="err-confirm_password" data-error-for="confirm_password" hidden></p>
+        </div>
+
+        <div class="field">
+            <label class="check">
+                <input type="checkbox" name="confirm_accuracy" value="1" aria-describedby="err-confirm_accuracy">
+                <span>I confirm that the information provided is accurate. <span class="req">*</span></span>
+            </label>
+            <p class="error" id="err-confirm_accuracy" data-error-for="confirm_accuracy" hidden></p>
+        </div>
+
+        <button type="submit" class="btn" id="submit-btn">SUBMIT REGISTRATION</button>
+    </form>
+
+    <p class="footer-link"><a href="summary.html">View registered students</a></p>
+</main>
+<script src="js/script.js"></script>
+</body>
+</html>
